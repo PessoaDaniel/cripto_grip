@@ -1,4 +1,4 @@
-#Sat Oct 26 14:58:56 BRT 2024
+#Sun Oct 27 10:49:00 BRT 2024
 base.0=/home/daniel/workspace/cripto_grip/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/home/daniel/workspace/cripto_grip/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.2=/home/daniel/workspace/cripto_grip/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
