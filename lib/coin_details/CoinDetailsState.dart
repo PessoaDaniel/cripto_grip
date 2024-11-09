@@ -1,8 +1,18 @@
+import 'dart:convert';
+
 import 'package:cripto_grip/coin_details/CoinDetais.dart';
+import 'package:cripto_grip/services/coinsService.dart';
 import 'package:flutter/material.dart';
 
 class CoinDetailsState extends State<CoinDetails> {
 
+  Map<String, dynamic> _coin  = {};
+  @override
+  void initState()  {
+    super.initState();
+    _getCoinData(widget.coinId);
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,19 +29,20 @@ class CoinDetailsState extends State<CoinDetails> {
                   width: 150,
                   decoration: BoxDecoration(
                       color: const Color(0xffE0AC5E),
-                      borderRadius: BorderRadius.circular(15)
+                      borderRadius: BorderRadius.circular(15),
                   ),
+                  child: Image.network(_coin['image']['large']),
                 )
               ],
             ),
-            const Row(
+            Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(padding: EdgeInsets.only(
+                   Padding(padding:const EdgeInsets.only(
                       top: 10,
                       bottom: 50
                   ), child:
-                  Text("Teste", style: TextStyle(
+                  Text(_coin['name'], style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold
                   ))),
@@ -43,7 +54,7 @@ class CoinDetailsState extends State<CoinDetails> {
                   borderRadius: BorderRadius.circular(10),
                   color: const Color.fromARGB(100, 224, 172, 94)
               ),
-              child: const Padding(padding: EdgeInsets.only(
+              child:  Padding(padding: const EdgeInsets.only(
                 bottom: 10,
                 top: 10,
                 left: 20,
@@ -54,15 +65,15 @@ class CoinDetailsState extends State<CoinDetails> {
                   Row(
                    children: [
                      Text(
-                       "\$ 0.00",
-                       style: TextStyle(
+                       "\$ ${double.parse(_coin['market_data']['current_price']['usd'].toString()).toStringAsFixed(2)}",
+                       style: const TextStyle(
                          fontWeight: FontWeight.bold
                        ),
                        textAlign: TextAlign.left,
                      ),
                    ],
                   ),
-                  Padding(padding: EdgeInsets.only(top: 10), child: Row(
+                  const Padding(padding: EdgeInsets.only(top: 10), child: Row(
                     children: [
                       Text(
                         "Detalhes",
@@ -72,7 +83,14 @@ class CoinDetailsState extends State<CoinDetails> {
                         textAlign: TextAlign.left,
                       )
                     ],
-                  ))
+                  )),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 200,
+                    child: SingleChildScrollView(
+                      child: Text(_coin['description']['en']),
+                    ),
+                  )
                 ],
               ),
             )),
@@ -87,9 +105,16 @@ class CoinDetailsState extends State<CoinDetails> {
                     ),
                 )
               ],
-            )
+            ),
           ],
         ))
     );
+  }
+  _getCoinData (String id) {
+    CoinsService().getById(id).then((response) {
+      setState(() {
+       _coin = jsonDecode(response.body);
+      });
+    });
   }
 }

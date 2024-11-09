@@ -7,13 +7,16 @@ class CoinListTile extends StatelessWidget {
   String _coinName = '';
   double _price = 0;
   String? _imageLink;
+  String _coinId = '';
   CoinListTile({
     super.key,
+    required coinId,
     required double elementIndex,
     required String coinName,
     required double price,
     String? imageLink
   }) {
+    _coinId = coinId;
     _elementIndex = elementIndex;
     _coinName = coinName;
     _imageLink = imageLink;
@@ -39,7 +42,7 @@ class CoinListTile extends StatelessWidget {
                   color: Colors.grey
               )),
           trailing: IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(
-              builder: (context) => CoinDetails()
+              builder: (context) => CoinDetails(coinId: _coinId)
           )),
               icon: const Icon(Icons.remove_red_eye_outlined)),
         ));

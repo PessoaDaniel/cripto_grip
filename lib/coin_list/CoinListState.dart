@@ -53,6 +53,7 @@ class CoinListState extends State<CoinList> {
       List<CoinListTile> coinTiles = [];
       List<dynamic> body = json.decode(response.body);
       body.forEach((coin) => coinTiles.add(CoinListTile(
+          coinId: coin['id'],
           elementIndex: 0,
           coinName: coin['name'],
           imageLink: coin['image'],

@@ -6,4 +6,8 @@ class CoinsService {
   Future<Response> getAll() {
     return get(Uri.parse("$_baseUrl/markets?vs_currency=usd"));
   }
+
+  Future<Response> getById(String id) {
+    return get(Uri.parse("$_baseUrl/$id"));
+  }
 }
