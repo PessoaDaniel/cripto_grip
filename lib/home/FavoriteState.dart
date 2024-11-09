@@ -3,26 +3,30 @@ import 'package:cripto_grip/home/Favorites.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteState extends State<Favorites> {
-  List <dynamic> _favoriteList = [1,2,3,4,5,6,7,8,9,10];
+  List <dynamic> _favoriteList = [];
 
   @override
   Widget build(BuildContext context) {
     return _favoriteList.isNotEmpty ? Expanded(child:
     ListView(
         children: _loadFavorites()),
-    ) : const SizedBox(
-      height: 200,
-      width: double.infinity,
-      child: ColoredBox(
-          color: Color.fromARGB(100, 224, 172, 94),
+    ) :   Container(
+          width: double.infinity,
+          height: 250,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(100, 224, 172, 94),
+            borderRadius: BorderRadius.circular(10)
+          ),
           child:
-          Column(
+          const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.star, size: 80, color: Color(0xffE0805E),),
-                Text("Ainda sem favoritos por aqui")
+                Text("Ainda sem favoritos por aqui", style: TextStyle(
+                  fontWeight: FontWeight.bold
+                ),)
               ]
-          )),
+          ),
     );
   }
 
