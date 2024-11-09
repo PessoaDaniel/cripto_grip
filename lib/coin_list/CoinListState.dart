@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:cripto_grip/coin_list/CoinList.dart';
+import 'package:cripto_grip/services/coinsService.dart';
 import 'package:flutter/material.dart';
 import 'package:cripto_grip/home/CoinListTile.dart';
 
 class CoinListState extends State<CoinList> {
 
-  List<dynamic> _coinList = [0,1,2,3,4,5,6,7,5,8,9];
+  List<Widget> _coinList = [];
+  bool _showSpin  = true;
+  CoinListState() {
+    _loadAllCoins();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,30 +26,42 @@ class CoinListState extends State<CoinList> {
               left: 30,
               right: 30
           ),
-          child: Column(
+          child: _showSpin?
+              const Center(
+                child: CircularProgressIndicator(),
+              )
+              : Column(
             children: [
               const TextField(
                 decoration: InputDecoration(
                     filled: true,
-                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                    prefixIcon: Icon(Icons.search, color: Colors.grey),
                     border: InputBorder.none
                 ),
               ),
               Expanded(child:
                 ListView(
-                  children: _loadAllCoins(),
+                  children: _coinList,
                 )
               )
             ],
           )),
     );
   }
-
-  List<CoinListTile> _loadAllCoins() {
-    List<CoinListTile> coinTiles = [];
-    _coinList.asMap().forEach((index, element) => coinTiles.add(CoinListTile(
-      elementIndex: double.parse(index.toString()),
-    )));
-    return coinTiles;
+  _loadAllCoins()  {
+    CoinsService().getAll().then((response) {
+      List<CoinListTile> coinTiles = [];
+      List<dynamic> body = json.decode(response.body);
+      body.forEach((coin) => coinTiles.add(CoinListTile(
+          elementIndex: 0,
+          coinName: coin['name'],
+          imageLink: coin['image'],
+          price: double.parse(coin['current_price'].toString()),
+      )));
+      setState(() {
+        _coinList = coinTiles;
+        _showSpin = false;
+      });
+    });
   }
 }

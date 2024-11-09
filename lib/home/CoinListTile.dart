@@ -4,9 +4,20 @@ import 'package:flutter/material.dart';
 class CoinListTile extends StatelessWidget {
 
   double _elementIndex = 0;
-
-  CoinListTile({super.key, required double elementIndex}) {
+  String _coinName = '';
+  double _price = 0;
+  String? _imageLink;
+  CoinListTile({
+    super.key,
+    required double elementIndex,
+    required String coinName,
+    required double price,
+    String? imageLink
+  }) {
     _elementIndex = elementIndex;
+    _coinName = coinName;
+    _imageLink = imageLink;
+    _price = price;
   }
 
   @override
@@ -15,13 +26,15 @@ class CoinListTile extends StatelessWidget {
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[],
         child: ListTile(
           onLongPress: () => _showItems(context),
-          leading:const  Card(
-            color: Color(0xffE0AC5E),
-            child: Padding(padding: EdgeInsets.all(12), child: Icon(Icons.arrow_upward)),
-          ),
-          title: const Text("Coin"),
-          subtitle: const Text("\$ 0.1",
-              style: TextStyle(
+          leading:Card(
+            color: const Color(0xffE0AC5E),
+            child: Padding(padding: const EdgeInsets.all(12),
+                child: _imageLink != null ? Image.network(_imageLink!) :
+                const Icon(Icons.arrow_upward)
+          )),
+          title: Text(_coinName),
+          subtitle: Text("\$ ${_price.toStringAsFixed(2)}",
+              style: const TextStyle(
                   fontSize: 12,
                   color: Colors.grey
               )),
@@ -33,7 +46,6 @@ class CoinListTile extends StatelessWidget {
    }
 
    void _showItems(BuildContext context) async {
-    print((((_elementIndex + 1) * 200) + 10));
     await showMenu(context: context,
         position:RelativeRect.fromLTRB(100, (150 + (70 * (_elementIndex + 1))), 100 ,100),
         items: [

@@ -33,7 +33,11 @@ class FavoriteState extends State<Favorites> {
   List<CoinListTile> _loadFavorites() {
     List<CoinListTile> favoriteList = [];
     _favoriteList.asMap().forEach((index, element) => favoriteList.add(
-        CoinListTile(elementIndex: double.parse(index.toString()))
+        CoinListTile(
+          elementIndex: double.parse(index.toString()),
+          coinName: '',
+          price: 0
+        )
     ));
     return favoriteList;
   }
