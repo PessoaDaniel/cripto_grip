@@ -13,10 +13,7 @@ class HomeState extends State<Home>{
           title: const Text("CriptoGrip"),
           backgroundColor: Colors.white,
         ),
-        body: Padding(padding:  const EdgeInsets.only(
-          left: 20,
-          right: 20
-        ), child: Column(
+        body: SingleChildScrollView(child: Padding(padding:  const EdgeInsets.all(25), child: Column(
           children: [
             SizedBox(
               height: 400,
@@ -41,6 +38,6 @@ class HomeState extends State<Home>{
             Favorites()
           ],
         ),
-      ));
+      )));
   }
 }

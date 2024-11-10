@@ -8,12 +8,14 @@ class CoinListTile extends StatelessWidget {
   double _price = 0;
   String? _imageLink;
   String _coinId = '';
+  ListView menuOptions;
   CoinListTile({
     super.key,
     required coinId,
     required double elementIndex,
     required String coinName,
     required double price,
+    required this.menuOptions,
     String? imageLink
   }) {
     _coinId = coinId;
@@ -25,10 +27,21 @@ class CoinListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[],
-        child: ListTile(
-          onLongPress: () => _showItems(context),
+    return ListTile(
+          onLongPress: () => showModalBottomSheet<void>(
+            context: context,
+              builder: (BuildContext context) {
+                return Padding(padding: const EdgeInsets.only(
+                    top: 20,
+                    left: 10,
+                    right: 10,
+                    bottom: 10
+                ), child: SizedBox(
+                  height: 50,
+                  child: menuOptions,
+                ));
+              }
+          ),
           leading:Card(
             color: Colors.transparent,
             surfaceTintColor: Colors.transparent,
@@ -47,7 +60,7 @@ class CoinListTile extends StatelessWidget {
               builder: (context) => CoinDetails(coinId: _coinId)
           )),
               icon: const Icon(Icons.remove_red_eye_outlined)),
-        ));
+        );
    }
 
    void _showItems(BuildContext context) async {
@@ -60,13 +73,5 @@ class CoinListTile extends StatelessWidget {
           )
         ]
     );
-  }
-
-  _addFavorite () {
-
-  }
-
-  _removeFavorite() {
-
   }
 }
