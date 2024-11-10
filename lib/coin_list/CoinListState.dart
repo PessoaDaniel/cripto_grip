@@ -58,15 +58,6 @@ class CoinListState extends State<CoinList> {
           coinName: coin['name'],
           imageLink: coin['image'],
           price: double.parse(coin['current_price'].toString()),
-          menuOptions: ListView(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.star),
-                title: const Text('Adicionar aos favoritos'),
-                onTap: () => _addFavorites(coin['id']),
-              )
-            ],
-          ),
       )));
       setState(() {
         _coinList = coinTiles;

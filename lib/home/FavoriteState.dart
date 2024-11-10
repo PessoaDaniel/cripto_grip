@@ -38,7 +38,6 @@ class FavoriteState extends State<Favorites> {
           elementIndex: double.parse(index.toString()),
           coinName: '',
           price: 0,
-          menuOptions: ListView(),
         )
     ));
     return favoriteList;

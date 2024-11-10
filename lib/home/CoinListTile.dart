@@ -1,5 +1,7 @@
 import 'package:cripto_grip/coin_details/CoinDetais.dart';
+import 'package:cripto_grip/services/DatabaseService.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class CoinListTile extends StatelessWidget {
 
@@ -8,14 +10,16 @@ class CoinListTile extends StatelessWidget {
   double _price = 0;
   String? _imageLink;
   String _coinId = '';
-  ListView menuOptions;
+  final _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
+
+
   CoinListTile({
     super.key,
     required coinId,
     required double elementIndex,
     required String coinName,
     required double price,
-    required this.menuOptions,
     String? imageLink
   }) {
     _coinId = coinId;
@@ -38,7 +42,24 @@ class CoinListTile extends StatelessWidget {
                     bottom: 10
                 ), child: SizedBox(
                   height: 50,
-                  child: menuOptions,
+                  child: ListView(
+                    children: [
+                      !_isFavorite() ? ListTile(
+                        leading: const Icon(Icons.star),
+                        title: const Text('Adicionar aos favoritos'),
+                        onTap: () {
+                          _addFavorite(context);
+                        },
+                      ) : ListTile(
+                        leading: const Icon(Icons.star_border_outlined),
+                        title: const Text('Remover dos favoritos'),
+                        onTap: () {
+                          _removeFavorite();
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ),
                 ));
               }
           ),
@@ -63,15 +84,20 @@ class CoinListTile extends StatelessWidget {
         );
    }
 
-   void _showItems(BuildContext context) async {
-    await showMenu(context: context,
-        position:RelativeRect.fromLTRB(100, (150 + (70 * (_elementIndex + 1))), 100 ,100),
-        items: [
-          PopupMenuItem<String>(
-              onTap: () {},
-              child: const Text("Adicionar aos favoritos")
-          )
-        ]
-    );
+   _addFavorite(BuildContext context) {
+    DatabaseService.insert('favorite', {
+      "id": _getRandomString(5),
+      "api_id" : _coinId
+    }).then((result) => Navigator.pop(context));
+   }
+
+   _removeFavorite() {
+   }
+
+   bool _isFavorite() {
+    return false;
   }
+
+  String _getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 }
