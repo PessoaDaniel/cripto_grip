@@ -30,7 +30,9 @@ class CoinListTile extends StatelessWidget {
         child: ListTile(
           onLongPress: () => _showItems(context),
           leading:Card(
-            color: const Color(0xffE0AC5E),
+            color: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
             child: Padding(padding: const EdgeInsets.all(12),
                 child: _imageLink != null ? Image.network(_imageLink!) :
                 const Icon(Icons.arrow_upward)
