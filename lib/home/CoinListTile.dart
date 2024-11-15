@@ -45,13 +45,13 @@ class CoinListTile extends StatelessWidget {
                   child: ListView(
                     children: [
                       !_isFavorite() ? ListTile(
-                        leading: const Icon(Icons.star),
+                        leading: const Icon(Icons.star_outlined),
                         title: const Text('Adicionar aos favoritos'),
                         onTap: () {
                           _addFavorite(context);
                         },
                       ) : ListTile(
-                        leading: const Icon(Icons.star_border_outlined),
+                        leading: const Icon(Icons.star_half),
                         title: const Text('Remover dos favoritos'),
                         onTap: () {
                           _removeFavorite();
@@ -80,7 +80,7 @@ class CoinListTile extends StatelessWidget {
           trailing: IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) => CoinDetails(coinId: _coinId)
           )),
-              icon: const Icon(Icons.remove_red_eye_outlined)),
+              icon: const Icon(Icons.add_circle_outlined)),
         );
    }
 
