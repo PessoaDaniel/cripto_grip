@@ -25,4 +25,5 @@ com.example.cripto_grip.app-resValues-23 /home/daniel/workspace/cripto_grip/buil
 com.example.cripto_grip.app-packageDebugResources-24 /home/daniel/workspace/cripto_grip/build/app/intermediates/incremental/debug/packageDebugResources/merged.dir
 com.example.cripto_grip.app-packageDebugResources-25 /home/daniel/workspace/cripto_grip/build/app/intermediates/incremental/debug/packageDebugResources/stripped.dir
 com.example.cripto_grip.app-merged_res-26 /home/daniel/workspace/cripto_grip/build/app/intermediates/merged_res/debug
-com.example.cripto_grip.app-packaged_res-27 /home/daniel/workspace/cripto_grip/build/sqflite_android/intermediates/packaged_res/debug
+com.example.cripto_grip.app-packaged_res-27 /home/daniel/workspace/cripto_grip/build/connectivity_plus/intermediates/packaged_res/debug
+com.example.cripto_grip.app-packaged_res-28 /home/daniel/workspace/cripto_grip/build/sqflite_android/intermediates/packaged_res/debug
