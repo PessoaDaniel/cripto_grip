@@ -24,4 +24,8 @@ class DatabaseService {
     final database = await DatabaseService.database();
     return await database.rawQuery("SELECT * FROM $table");
   }
+  static Future<void> removeOne(String table, String coinId) async {
+    final database = await DatabaseService.database();
+    await database.execute("DELETE FROM $table WHERE api_id = '$coinId'");
+  }
 }

@@ -84,6 +84,11 @@ class CoinListTileState  extends State<CoinListTile> {
   }
 
   _removeFavorite() {
+    DatabaseService.removeOne('favorite', widget.coinId).then((result) {
+      setState(() {
+        _isFavorite = false;
+      });
+    });
   }
 
   void _checkIsFavorite() {
