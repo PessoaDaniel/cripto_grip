@@ -20,4 +20,8 @@ class DatabaseService {
     final database = await DatabaseService.database();
     await database.insert(table, data, conflictAlgorithm: sqlite.ConflictAlgorithm.replace);
   }
+  static Future<List<Map<String, Object?>>> findAll(String table) async {
+    final database = await DatabaseService.database();
+    return await database.rawQuery("SELECT * FROM $table");
+  }
 }

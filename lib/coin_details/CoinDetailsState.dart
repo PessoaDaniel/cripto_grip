@@ -6,7 +6,6 @@ import 'package:cripto_grip/coin_details/CoinDetais.dart';
 import 'package:cripto_grip/services/coinsService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class CoinDetailsState extends State<CoinDetails> {
   List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];

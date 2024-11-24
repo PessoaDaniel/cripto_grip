@@ -65,7 +65,4 @@ class CoinListState extends State<CoinList> {
       });
     });
   }
-
-  _addFavorites(String coinId) {
-  }
 }
