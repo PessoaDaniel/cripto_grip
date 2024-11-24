@@ -1,17 +1,23 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cripto_grip/coin_list/CoinList.dart';
 import 'package:cripto_grip/home/Favorites.dart';
 import 'package:cripto_grip/home/Home.dart';
 import 'package:cripto_grip/home/HomeChart.dart';
-import 'package:cripto_grip/home/HomeOptionBar.dart';
-import 'package:cripto_grip/home/QuotesChart.dart';
+import 'package:cripto_grip/home/NoFavoritesWidget.dart';
+import 'package:cripto_grip/services/DatabaseService.dart';
+import 'package:cripto_grip/services/coinsService.dart';
+import 'package:cripto_grip/shared/CoinListTile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 
-class HomeState extends State<Home>{
+class HomeState extends State<Home> {
 
+  List<CoinListTile> _favorites = [];
   List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
@@ -21,7 +27,8 @@ class HomeState extends State<Home>{
     super.initState();
     initConnectivity();
     _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    _loadFavorites();
   }
 
   @override
@@ -52,38 +59,82 @@ class HomeState extends State<Home>{
     // ignore: avoid_print
     print('Connectivity changed: $_connectionStatus');
   }
-      @override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text("CriptoGrip"),
           backgroundColor: Colors.white,
         ),
-        body: _connectionStatus[0] != ConnectivityResult.none ?  SingleChildScrollView(child: Padding(padding:  const EdgeInsets.all(25), child: Column(
-          children: [
-            HomeChart(),
-            HomeOptionBar(),
-            Favorites()
-          ],
-        ),
-      )) : const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+        body: _connectionStatus[0] != ConnectivityResult.none
+            ? SingleChildScrollView(
+            child: Padding(padding: const EdgeInsets.all(25), child: Column(
               children: [
-                Icon(Icons.wifi_off, size: 100, color: Colors.grey),
+                const HomeChart(),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("No network connection!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.grey
-                        ),
-                    )
+                    const Text("My coins"),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context, MaterialPageRoute(
+                            builder:(context) => CoinList())
+                        );
+                        },
+                        child: const Text("See all",
+                          style: TextStyle(color: Colors.black),
+                        ))
                   ],
-                )
+                ),
+                RefreshIndicator(onRefresh: () => _doRefresh(),
+                  child: _favorites.isNotEmpty ?
+                  Favorites(favorites: _favorites): const NoFavoritesWidget())
               ],
             ),
+            ))
+            : const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.wifi_off, size: 100, color: Colors.grey),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("No network connection!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.grey
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ));
+  }
+
+  void _loadFavorites() async {
+    List<dynamic> favorites = await DatabaseService.findAll('favorite');
+    List<CoinListTile> favoriteList = [];
+    for (int i = 0; i < favorites.length; i++) {
+      Response response = await CoinsService().getById(favorites[i]['api_id']);
+      dynamic coinData = jsonDecode(response.body);
+      favoriteList.add(
+          CoinListTile(
+            coinId: favorites[i]['api_id'],
+            elementIndex: double.parse(i.toString()),
+            coinName: coinData['name'],
+            price: double.parse(
+                coinData['market_data']['current_price']['usd'].toString()),
+            imageLink: coinData['image']['small'],
+          ));
+    }
+    setState(() {_favorites = favoriteList;});
+  }
+  Future<void> _doRefresh() async {
+    _loadFavorites();
   }
 }
