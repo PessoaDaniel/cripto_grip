@@ -1,4 +1,4 @@
-import 'package:cripto_grip/home/CoinListTile.dart';
+import 'package:cripto_grip/shared/CoinListTile.dart';
 import 'package:cripto_grip/home/Favorites.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class FavoriteState extends State<Favorites> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.star, size: 80, color: Color(0xffE0805E),),
-                Text("Ainda sem favoritos por aqui", style: TextStyle(
+                Text("No favorites yet :(", style: TextStyle(
                   fontWeight: FontWeight.bold
                 ),)
               ]

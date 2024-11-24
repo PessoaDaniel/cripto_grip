@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cripto_grip/coin_list/CoinList.dart';
 import 'package:cripto_grip/services/coinsService.dart';
 import 'package:flutter/material.dart';
-import 'package:cripto_grip/home/CoinListTile.dart';
+import 'package:cripto_grip/shared/CoinListTile.dart';
 
 class CoinListState extends State<CoinList> {
 
