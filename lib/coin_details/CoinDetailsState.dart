@@ -18,11 +18,8 @@ class CoinDetailsState extends State<CoinDetails> {
     super.initState();
     initConnectivity();
     _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-
-    if (_connectionStatus[0] != ConnectivityResult.none) {
-      _getCoinData(widget.coinId);
-    }
+    _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    _getCoinData(widget.coinId);
   }
 
   @override
@@ -59,6 +56,8 @@ class CoinDetailsState extends State<CoinDetails> {
 
   @override
   Widget build(BuildContext context) {
+    print(_connectionStatus[0]);
+
     return Scaffold(
         appBar: AppBar(
             title: const Text("CriptoGrip")
