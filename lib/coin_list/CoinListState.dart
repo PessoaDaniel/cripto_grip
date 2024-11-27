@@ -80,7 +80,7 @@ class CoinListState extends State<CoinList> {
              imageLink: coin['thumb'],
          ));
         });
-        if (coinTiles.length > 0) {
+        if (coinTiles.isNotEmpty) {
           setState(() {
             _coinList = coinTiles;
           });
