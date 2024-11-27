@@ -19,6 +19,9 @@ class CoinsService {
   Future<Response> getChartData(String id) {
     return get(Uri.parse("$_baseUrl/$id/market_chart?vs_currency=usd&days=9&precision=2&interval=daily&x_cg_demo_api_key=CG-DnXABVRpGWtNiWeFZqcYVMEd"));
   }
+  Future<Response> getByName(String name) {
+    return get(Uri.parse("https://api.coingecko.com/api/v3/search?query=$name&x_cg_demo_api_key=CG-DnXABVRpGWtNiWeFZqcYVMEd"));
+  }
 
 
 

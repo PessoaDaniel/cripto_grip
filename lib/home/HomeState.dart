@@ -95,7 +95,7 @@ class HomeState extends State<Home> {
                   SizedBox(
                     height: 150,
                     child: ListView(
-                      children: [NoFavoritesWidget()],
+                      children: const [NoFavoritesWidget()],
                     ),
                   )
                 )

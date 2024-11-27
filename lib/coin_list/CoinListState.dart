@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cripto_grip/coin_list/CoinList.dart';
 import 'package:cripto_grip/services/coinsService.dart';
@@ -32,8 +33,9 @@ class CoinListState extends State<CoinList> {
               )
               : Column(
             children: [
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                onChanged: (text) => _filterByCoinName(text),
+                decoration: const InputDecoration(
                     filled: true,
                     prefixIcon: Icon(Icons.search, color: Colors.grey),
                     border: InputBorder.none
@@ -64,5 +66,28 @@ class CoinListState extends State<CoinList> {
         _showSpin = false;
       });
     });
+  }
+  _filterByCoinName (String text) {
+      CoinsService().getByName(text).then((response) {
+        List<CoinListTile> coinTiles = [];
+        Map<String, dynamic> body = json.decode(response.body);
+        body['coins'].forEach((coin) {
+         coinTiles.add(CoinListTile(
+             coinId: coin['id'],
+             elementIndex: 0,
+             coinName: coin['name'],
+             price:0,
+             imageLink: coin['thumb'],
+         ));
+        });
+        if (coinTiles.length > 0) {
+          setState(() {
+            _coinList = coinTiles;
+          });
+        } else {
+          _loadAllCoins();
+        }
+
+      });
   }
 }
