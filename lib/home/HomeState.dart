@@ -91,7 +91,14 @@ class HomeState extends State<Home> {
                 ),
                 RefreshIndicator(onRefresh: () => _doRefresh(),
                   child: _favorites.isNotEmpty ?
-                  Favorites(favorites: _favorites): const NoFavoritesWidget())
+                  Favorites(favorites: _favorites):
+                  SizedBox(
+                    height: 150,
+                    child: ListView(
+                      children: [NoFavoritesWidget()],
+                    ),
+                  )
+                )
               ],
             ),
             ))

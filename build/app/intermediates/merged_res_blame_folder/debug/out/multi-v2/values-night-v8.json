@@ -4,7 +4,7 @@
             "outputFile": "com.example.cripto_grip.app-mergeDebugResources-24:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/home/daniel/workspace/cripto_grip/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/home/danielpessoa/workspace/cripto_grip/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
