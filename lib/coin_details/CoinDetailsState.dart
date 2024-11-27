@@ -46,7 +46,6 @@ class CoinDetailsState extends State<CoinDetails> {
     setState(() {
       _connectionStatus = result;
     });
-    // ignore: avoid_print
     print('Connectivity changed: $_connectionStatus');
   }
 
@@ -55,8 +54,6 @@ class CoinDetailsState extends State<CoinDetails> {
 
   @override
   Widget build(BuildContext context) {
-    print(_connectionStatus[0]);
-
     return Scaffold(
         appBar: AppBar(
             title: const Text("CriptoGrip")

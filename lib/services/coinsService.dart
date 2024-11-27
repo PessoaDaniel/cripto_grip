@@ -43,7 +43,6 @@ class CoinsService {
       Response coinsListDataResponse = await getBylist(ids);
       List<dynamic> coinListSelection = await jsonDecode(coinsListDataResponse.body);
       for (var element in coinListSelection) {
-        print('aki');
         Response chartResponse = await getChartData(element['id']);
         Map<String, dynamic> chartData = await jsonDecode(chartResponse.body);
         coinMap.add({
